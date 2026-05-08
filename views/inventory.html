@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Inventory | TechTracker</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <nav>
+        <div class="logo" style="color:white; font-weight:bold;">TechTracker</div>
+        <ul class="nav-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/inventory">Inventory</a></li>
+            <li><a href="/register">Register Device</a></li>
+        </ul>
+    </nav>
+    <main>
+        <h1>Device Inventory</h1>
+        <table id="deviceTable">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>OS</th>
+                    <th>IP Address</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody">
+                </tbody>
+        </table>
+    </main>
+    <script>
+        // Fetch call to retrieve data from backend
+        async function loadDevices() {
+            const response = await fetch('/api/devices');
+            const data = await response.json();
+            const tableBody = document.getElementById('tableBody');
+            
+            data.forEach(device => {
+                const row = `<tr>
+                    <td>${device.name}</td>
+                    <td>${device.type}</td>
+                    <td>${device.os}</td>
+                    <td>${device.ip}</td>
+                </tr>`;
+                tableBody.innerHTML += row;
+            });
+        }
+        loadDevices();
+    </script>
+</body>
+</html>
